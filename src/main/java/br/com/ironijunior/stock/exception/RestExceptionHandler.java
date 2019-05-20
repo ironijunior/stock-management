@@ -8,7 +8,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-
     @ExceptionHandler(OutdatedException.class)
     protected ResponseEntity<String> handleOutdatedException(OutdatedException ex) {
         return ResponseEntity.noContent().build();
@@ -17,5 +16,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
         return ResponseEntity.notFound().build();
+    }
+    
+    @ExceptionHandler(DuplicatedStockException.class)
+    protected ResponseEntity<String> handleDuplicatedStockException(DuplicatedStockException ex) {
+        return ResponseEntity.noContent().build();
     }
 }

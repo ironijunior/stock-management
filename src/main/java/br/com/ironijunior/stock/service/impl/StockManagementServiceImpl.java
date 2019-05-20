@@ -14,6 +14,7 @@ import br.com.ironijunior.stock.dto.ProductDTO;
 import br.com.ironijunior.stock.dto.ProductSaleDTO;
 import br.com.ironijunior.stock.dto.StatisticsDTO;
 import br.com.ironijunior.stock.dto.StockDTO;
+import br.com.ironijunior.stock.exception.DuplicatedStockException;
 import br.com.ironijunior.stock.exception.NotFoundException;
 import br.com.ironijunior.stock.exception.OutdatedException;
 import br.com.ironijunior.stock.model.Product;
@@ -40,6 +41,7 @@ public class StockManagementServiceImpl implements StockManagementService {
 	
 	@Override
 	public void updateStock(StockDTO stockDTO) throws OutdatedException {
+		checkDuplicatedStock(stockDTO);
 		Product product = getProduct(stockDTO.getProductId());
 		
 		synchronized(product) {
@@ -47,7 +49,7 @@ public class StockManagementServiceImpl implements StockManagementService {
             
             if(stock != null) {
             	checkOutdatedStock(stock, stockDTO);
-            	createProductSale(stock, stockDTO);            	
+            	createProductSale(stock, stockDTO);
             }
             
             Stock newStock = stockDTO.getStock(product);
@@ -102,6 +104,12 @@ public class StockManagementServiceImpl implements StockManagementService {
 			
 			ProductSale sale = new ProductSale(current.getProduct(), diff, newer.getTimestamp());
 			productSaleRepo.saveAndFlush(sale);
+		}
+	}
+	
+	private void checkDuplicatedStock(StockDTO stock) {
+		if(stockRepo.findById(stock.getId()).isPresent()) {
+			throw new DuplicatedStockException();
 		}
 	}
 	
