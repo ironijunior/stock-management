@@ -14,7 +14,7 @@ A simple Stock Management API using Java.
 
 To run as a Docker Image, execute in root directory:
 
-`docker build -t stock-management . && docker run -p 8080:8080 -it stock-management`
+`docker build -t stock-management . && docker run -p 8080:8080 -it --rm stock-management`
 
 
 ## Endpoints
