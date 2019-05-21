@@ -16,6 +16,9 @@ To run as a Docker Image, execute in root directory:
 
 `docker build -t stock-management . && docker run -p 8080:8080 -it --rm stock-management`
 
+Docker repository with this image:
+https://cloud.docker.com/repository/docker/ironijunior/stock-management
+
 
 ## Endpoints
 #### [POST] /updateStock
