@@ -42,10 +42,12 @@ public class StockDTO implements Serializable {
 	}
 	
     public StockDTO(Stock stock) {
-    	this.id = stock.getId();
-    	this.productId = stock.getProduct().getId();
-    	this.quantity = stock.getQuantity();
-        this.timestamp = stock.getTimestamp();
+    	if(stock != null) {
+	    	this.id = stock.getId();
+	    	this.productId = stock.getProduct().getId();
+	    	this.quantity = stock.getQuantity();
+	        this.timestamp = stock.getTimestamp();
+    	}
     }
 
     public Stock getStock(Product product) {
